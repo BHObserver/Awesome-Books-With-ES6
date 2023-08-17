@@ -9,7 +9,6 @@ class Book {
       oneBook.innerHTML = `
       <p class="title">"${bookArr[i].title}" by ${bookArr[i].author}</p>
       <button class="remove" data-book-id="${bookArr[i].id}">Remove</button>`;
-      /* oneBook.setAttribute('data-book-id', i); */
       bookInfo.appendChild(oneBook);
       titleInput.value = '';
       authorInput.value = '';
