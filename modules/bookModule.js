@@ -1,19 +1,15 @@
-// bookModule.js
 export const bookArr = [];
 
-export class Book {
-  // ... other methods ...
-
+class Book {
   static bookDisplay(bookInfo, titleInput, authorInput, Book) {
     bookInfo.innerHTML = '';
     for (let i = 0; i < bookArr.length; i += 1) {
-      // ... book display logic ...
       const oneBook = document.createElement('div');
       oneBook.className = 'book';
       oneBook.innerHTML = `
       <p class="title">"${bookArr[i].title}" by ${bookArr[i].author}</p>
-      <button class="remove" data-index="${i}">Remove</button>`;
-      oneBook.setAttribute('data-book-id', i);
+      <button class="remove" data-book-id="${bookArr[i].id}">Remove</button>`;
+      /* oneBook.setAttribute('data-book-id', i); */
       bookInfo.appendChild(oneBook);
       titleInput.value = '';
       authorInput.value = '';
@@ -22,7 +18,8 @@ export class Book {
 
   static addBook(bookInfo, titleInput, authorInput) {
     const eachBook = {};
-    eachBook.id = bookArr.length;
+    const uniqueId = Math.floor(Math.random() * (10 ** 8)).toString(16);
+    eachBook.id = uniqueId;
     eachBook.title = titleInput.value;
     eachBook.author = authorInput.value;
 
