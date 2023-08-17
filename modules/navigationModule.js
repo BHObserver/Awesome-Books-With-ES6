@@ -1,4 +1,3 @@
-// navigationModule.js
 export default function setupNavigation(listBtn,
   addBtn,
   contactBtn,
