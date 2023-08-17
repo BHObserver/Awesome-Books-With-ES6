@@ -1,7 +1,7 @@
 export const bookArr = [];
 
 class Book {
-  static bookDisplay(bookInfo, titleInput, authorInput, Book) {
+  static bookDisplay(bookInfo, titleInput, authorInput) {
     bookInfo.innerHTML = '';
     for (let i = 0; i < bookArr.length; i += 1) {
       const oneBook = document.createElement('div');
