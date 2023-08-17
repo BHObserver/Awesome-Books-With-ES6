@@ -1,13 +1,13 @@
 // index.js
 import Book, { bookArr } from './modules/bookModule.js';
 import setupNavigation from './modules/navigationModule.js';
+import setTime from './modules/dateTime.js';
 
 /* const colorItem = document.querySelector('body'); */
 const form = document.querySelector('form');
 const bookInfo = document.querySelector('.all-books');
 const title = document.querySelector('#input-title');
 const author = document.querySelector('#input-author');
-const dateEl = document.querySelector('.date');
 const listBtn = document.querySelector('.list-btn');
 const addBtn = document.querySelector('.add-btn');
 const contactBtn = document.querySelector('.contact-btn');
@@ -47,10 +47,16 @@ window.addEventListener('load', () => {
 });
 
 // SPA Navigation setup
-setupNavigation(listBtn, addBtn, contactBtn, bookSection, addBookSection, contactSection, listAnchor, addAnchor, contactAnchor);
+setupNavigation(
+  listBtn,
+  addBtn,
+  contactBtn,
+  bookSection,
+  addBookSection,
+  contactSection,
+  listAnchor,
+  addAnchor,
+  contactAnchor,
+);
 
-// SPA Navigation
-window.setInterval(() => {
-  const date = new Date();
-  dateEl.innerHTML = date;
-}, 1000);
+setTime();
