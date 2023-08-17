@@ -1,9 +1,7 @@
-// index.js
 import Book, { bookArr } from './modules/bookModule.js';
 import setupNavigation from './modules/navigationModule.js';
 import setTime from './modules/dateTime.js';
 
-/* const colorItem = document.querySelector('body'); */
 const form = document.querySelector('form');
 const bookInfo = document.querySelector('.all-books');
 const title = document.querySelector('#input-title');
@@ -34,19 +32,18 @@ window.addEventListener('load', () => {
   // Event listener for remove buttons
   bookInfo.addEventListener('click', (event) => {
     if (event.target.classList.contains('remove')) {
-      const index = parseInt(event.target.dataset.index, 10);
-      if (!Number.isNaN(index)) {
-        const bookElement = document.querySelector(`[data-book-id="${index}"]`);
-        if (bookElement) {
-          bookElement.remove();
-        }
-        Book.removeBook();
+      const id = event.target.dataset.bookId;
+      const bookElement = document.querySelector(`[data-book-id="${`${id}`}"]`);
+      if (bookElement) {
+        bookElement.parentElement.remove();
       }
+      bookArr.forEach((item) => {
+        if (item.id === id) Book.removeBook(bookArr.indexOf(item));
+      });
     }
   });
 });
 
-// SPA Navigation setup
 setupNavigation(
   listBtn,
   addBtn,
