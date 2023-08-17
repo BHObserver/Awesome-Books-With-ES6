@@ -1,74 +1,56 @@
-import {
-  bookArr, bookDisplay, addBook, removeBook,
-} from './modules/functions.js';
+// index.js
+import Book, { bookArr } from './modules/bookModule.js';
+import setupNavigation from './modules/navigationModule.js';
 
+/* const colorItem = document.querySelector('body'); */
 const form = document.querySelector('form');
+const bookInfo = document.querySelector('.all-books');
+const title = document.querySelector('#input-title');
+const author = document.querySelector('#input-author');
+const dateEl = document.querySelector('.date');
+const listBtn = document.querySelector('.list-btn');
+const addBtn = document.querySelector('.add-btn');
+const contactBtn = document.querySelector('.contact-btn');
+const bookSection = document.querySelector('.books-list');
+const addBookSection = document.querySelector('.add-book-form');
+const contactSection = document.querySelector('.contact-info');
+const listAnchor = document.querySelector('.list-anchor');
+const addAnchor = document.querySelector('.add-anchor');
+const contactAnchor = document.querySelector('.contact-anchor');
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  addBook();
+  Book.addBook(bookInfo, title, author);
 });
 
 window.addEventListener('load', () => {
   const getJsonData = localStorage.getItem('form');
   if (getJsonData) {
-    bookArr = JSON.parse(getJsonData);
+    bookArr.push(...JSON.parse(getJsonData));
   }
-  bookDisplay();
+
+  Book.bookDisplay(bookInfo, title, author, Book);
+
+  // Event listener for remove buttons
+  bookInfo.addEventListener('click', (event) => {
+    if (event.target.classList.contains('remove')) {
+      const index = parseInt(event.target.dataset.index, 10);
+      if (!Number.isNaN(index)) {
+        const bookElement = document.querySelector(`[data-book-id="${index}"]`);
+        if (bookElement) {
+          bookElement.remove();
+        }
+        Book.removeBook();
+      }
+    }
+  });
 });
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  Book.addBook();
-});
-window.addEventListener('load', () => {
-  const getJsonData = localStorage.getItem('form');
-  if (getJsonData) {
-    bookArr = JSON.parse(getJsonData);
-  }
-  Book.bookDisplay();
-});
+// SPA Navigation setup
+setupNavigation(listBtn, addBtn, contactBtn, bookSection, addBookSection, contactSection, listAnchor, addAnchor, contactAnchor);
 
 // SPA Navigation
 window.setInterval(() => {
   const date = new Date();
   dateEl.innerHTML = date;
 }, 1000);
-
-listBtn.addEventListener('click', () => {
-  bookSection.classList.add('active');
-  bookSection.classList.remove('hiiden');
-  addBookSection.classList.add('hidden');
-  addBookSection.classList.remove('active');
-  contactSection.classList.add('hidden');
-  contactSection.classList.remove('active');
-
-  listAnchor.classList.add('list-active');
-  addAnchor.classList.remove('list-active');
-  contactAnchor.classList.remove('list-active');
-});
-
-addBtn.addEventListener('click', () => {
-  bookSection.classList.remove('active');
-  bookSection.classList.add('hidden');
-  addBookSection.classList.add('active');
-  addBookSection.classList.remove('hidden');
-  contactSection.classList.add('hidden');
-  contactSection.classList.remove('active');
-
-  listAnchor.classList.remove('list-active');
-  addAnchor.classList.add('list-active');
-  contactAnchor.classList.remove('list-active');
-});
-
-contactBtn.addEventListener('click', () => {
-  bookSection.classList.add('hidden');
-  bookSection.classList.remove('active');
-  addBookSection.classList.remove('active');
-  addBookSection.classList.add('hidden');
-  contactSection.classList.add('active');
-  contactSection.classList.remove('hidden');
-
-  listAnchor.classList.remove('list-active');
-  addAnchor.classList.remove('list-active');
-  contactAnchor.classList.add('list-active');
-});
